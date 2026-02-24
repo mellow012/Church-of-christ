@@ -3,9 +3,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
 export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();
@@ -17,52 +14,53 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    );
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-    if (error) {
+    if (error || !data.session) {
       return NextResponse.json(
-        { error: error.message },
+        { error: error?.message ?? 'Invalid credentials.' },
         { status: 401 }
       );
     }
 
-    const { session } = data;
+    const { session, user } = data;
 
-    // Build response
     const response = NextResponse.json(
-      { success: true, user: { id: data.user.id, email: data.user.email } },
+      { success: true, user: { id: user.id, email: user.email } },
       { status: 200 }
     );
 
-    // Write the session tokens as HttpOnly cookies so middleware can read them
-    // and so they aren't accessible to client-side JS
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    // HttpOnly cookie — readable by middleware, NOT by client JS
     response.cookies.set({
       name: 'sb-access-token',
       value: session.access_token,
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: isProduction,
       sameSite: 'lax',
       path: '/',
-      maxAge: session.expires_in,     // seconds until expiry (typically 3600)
+      maxAge: session.expires_in ?? 3600,
     });
 
     response.cookies.set({
       name: 'sb-refresh-token',
       value: session.refresh_token,
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: isProduction,
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24 * 30,     // 30 days
+      maxAge: 60 * 60 * 24 * 30, // 30 days
     });
 
     return response;
-  } catch {
+  } catch (err) {
+    console.error('[login]', err);
     return NextResponse.json(
       { error: 'An unexpected error occurred.' },
       { status: 500 }

@@ -3,28 +3,18 @@
 import { NextResponse } from 'next/server';
 
 export async function POST() {
-  const response = NextResponse.json({ success: true }, { status: 200 });
+  const response = NextResponse.json({ success: true });
 
-  // Clear both auth cookies
-  response.cookies.set({
-    name: 'sb-access-token',
-    value: '',
+  const cookieOptions = {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    sameSite: 'lax' as const,
     path: '/',
-    maxAge: 0,
-  });
+    maxAge: 0, // immediate expiry = delete
+  };
 
-  response.cookies.set({
-    name: 'sb-refresh-token',
-    value: '',
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    path: '/',
-    maxAge: 0,
-  });
+  response.cookies.set({ name: 'sb-access-token',  value: '', ...cookieOptions });
+  response.cookies.set({ name: 'sb-refresh-token', value: '', ...cookieOptions });
 
   return response;
 }

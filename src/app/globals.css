@@ -3,153 +3,160 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Church Color Scheme */
+/* ═══════════════════════════════════════════════════════════
+   CHURCH OF CHRIST AT REDCROSS — BRAND COLOURS
+   Primary: Sunset Gold #F7C46C  (from brand manual)
+   Font: Montserrat (Century Gothic equivalent, Google Fonts)
+   ═══════════════════════════════════════════════════════════ */
+
 :root {
   --radius: 0.625rem;
-  
-  /* Base Tones */
-  --primary-deep: #1e3a5f;
-  --primary-warm: #faf8f5;
-  --neutral-surface: #e8e4df;
-  --background: #fdfcfa;
-  
-  /* Accent Colors */
-  --gold: #c9a227;
-  --amber: #d4a574;
-  --forest-green: #2d5a3d;
-  --terracotta: #c17f59;
-  
-  /* Text Colors */
-  --heading: #1e3a5f;
-  --body: #3d3d3d;
-  --caption: #6b6b6b;
-  
-  /* Shadcn UI Variables */
-  --card: #faf8f5;
-  --card-foreground: #1e3a5f;
-  --popover: #faf8f5;
-  --popover-foreground: #1e3a5f;
-  --primary: #1e3a5f;
-  --primary-foreground: #faf8f5;
-  --secondary: #e8e4df;
-  --secondary-foreground: #1e3a5f;
-  --muted: #e8e4df;
-  --muted-foreground: #6b6b6b;
-  --accent: #c9a227;
-  --accent-foreground: #1e3a5f;
-  --destructive: #c17f59;
-  --destructive-foreground: #faf8f5;
-  --border: #e8e4df;
-  --input: #e8e4df;
-  --ring: #c9a227;
-  --foreground: #3d3d3d;
-  
-  /* Chart colors */
-  --chart-1: #1e3a5f;
-  --chart-2: #c9a227;
-  --chart-3: #2d5a3d;
-  --chart-4: #d4a574;
-  --chart-5: #c17f59;
-  
-  /* Sidebar */
-  --sidebar: #faf8f5;
-  --sidebar-foreground: #1e3a5f;
-  --sidebar-primary: #1e3a5f;
-  --sidebar-primary-foreground: #faf8f5;
-  --sidebar-accent: #e8e4df;
-  --sidebar-accent-foreground: #1e3a5f;
-  --sidebar-border: #e8e4df;
-  --sidebar-ring: #c9a227;
+
+  /* ── Base Tones ────────────────────────────────────────── */
+  --primary-deep:    #3B1F0A;   /* Deep warm brown — navbar, headings    */
+  --primary-warm:    #FFFDF8;   /* Warm off-white — card backgrounds      */
+  --neutral-surface: #F0EBE1;   /* Parchment — borders, muted surfaces    */
+  --background:      #FDFAF4;   /* Warm ivory — page background           */
+
+  /* ── Brand Accent Colors (from brand manual) ───────────── */
+  --gold:            #F7C46C;   /* Sunset Gold — PRIMARY brand colour     */
+  --amber:           #E8A040;   /* Darker gold — hover states             */
+  --gold-dark:       #C17E0A;   /* Deep gold — text on light backgrounds  */
+  --forest-green:    #3A6B3E;   /* Warm green                             */
+  --terracotta:      #C94B2A;   /* Warm red-orange                        */
+
+  /* ── Text Colors ───────────────────────────────────────── */
+  --heading:         #2C1A06;   /* Deep brown for all headings            */
+  --body:            #4A3728;   /* Warm brown for body text               */
+  --caption:         #8C7360;   /* Muted brown for captions/labels        */
+
+  /* ── shadcn/ui Variables ──────────────────────────────── */
+  --card:               #FFFDF8;
+  --card-foreground:    #2C1A06;
+  --popover:            #FFFDF8;
+  --popover-foreground: #2C1A06;
+  --primary:            #F7C46C;
+  --primary-foreground: #2C1A06;
+  --secondary:          #F0EBE1;
+  --secondary-foreground: #2C1A06;
+  --muted:              #F0EBE1;
+  --muted-foreground:   #8C7360;
+  --accent:             #F7C46C;
+  --accent-foreground:  #2C1A06;
+  --destructive:        #C94B2A;
+  --destructive-foreground: #FFFDF8;
+  --border:             #E8DDD0;
+  --input:              #E8DDD0;
+  --ring:               #F7C46C;
+  --foreground:         #4A3728;
+
+  /* ── Chart Colors ─────────────────────────────────────── */
+  --chart-1: #3B1F0A;
+  --chart-2: #F7C46C;
+  --chart-3: #3A6B3E;
+  --chart-4: #E8A040;
+  --chart-5: #C94B2A;
+
+  /* ── Sidebar ──────────────────────────────────────────── */
+  --sidebar:                    #FFFDF8;
+  --sidebar-foreground:         #2C1A06;
+  --sidebar-primary:            #3B1F0A;
+  --sidebar-primary-foreground: #FFFDF8;
+  --sidebar-accent:             #F0EBE1;
+  --sidebar-accent-foreground:  #2C1A06;
+  --sidebar-border:             #E8DDD0;
+  --sidebar-ring:               #F7C46C;
 }
 
 .dark {
-  --background: #1a1a1a;
-  --foreground: #faf8f5;
-  --card: #252525;
-  --card-foreground: #faf8f5;
-  --popover: #252525;
-  --popover-foreground: #faf8f5;
-  --primary: #c9a227;
-  --primary-foreground: #1e3a5f;
-  --secondary: #333333;
-  --secondary-foreground: #faf8f5;
-  --muted: #333333;
-  --muted-foreground: #a0a0a0;
-  --accent: #c9a227;
-  --accent-foreground: #1e3a5f;
-  --destructive: #c17f59;
-  --destructive-foreground: #faf8f5;
-  --border: #333333;
-  --input: #333333;
-  --ring: #c9a227;
-  
-  --chart-1: #c9a227;
-  --chart-2: #d4a574;
-  --chart-3: #5a9a6d;
-  --chart-4: #d4a574;
-  --chart-5: #d4956a;
-  
-  --sidebar: #252525;
-  --sidebar-foreground: #faf8f5;
-  --sidebar-primary: #c9a227;
-  --sidebar-primary-foreground: #1e3a5f;
-  --sidebar-accent: #333333;
-  --sidebar-accent-foreground: #faf8f5;
-  --sidebar-border: #333333;
-  --sidebar-ring: #c9a227;
+  --background:      #1C1208;
+  --foreground:      #FDFAF4;
+  --card:            #261809;
+  --card-foreground: #FDFAF4;
+  --popover:         #261809;
+  --popover-foreground: #FDFAF4;
+  --primary:         #F7C46C;
+  --primary-foreground: #2C1A06;
+  --secondary:       #3A2810;
+  --secondary-foreground: #FDFAF4;
+  --muted:           #3A2810;
+  --muted-foreground: #A08C78;
+  --accent:          #F7C46C;
+  --accent-foreground: #2C1A06;
+  --destructive:     #C94B2A;
+  --destructive-foreground: #FDFAF4;
+  --border:          #3A2810;
+  --input:           #3A2810;
+  --ring:            #F7C46C;
+
+  --chart-1: #F7C46C;
+  --chart-2: #E8A040;
+  --chart-3: #5A9A6D;
+  --chart-4: #E8A040;
+  --chart-5: #D46045;
+
+  --sidebar:                    #261809;
+  --sidebar-foreground:         #FDFAF4;
+  --sidebar-primary:            #F7C46C;
+  --sidebar-primary-foreground: #2C1A06;
+  --sidebar-accent:             #3A2810;
+  --sidebar-accent-foreground:  #FDFAF4;
+  --sidebar-border:             #3A2810;
+  --sidebar-ring:               #F7C46C;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-playfair);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
+  --font-sans:        var(--font-montserrat);
+  --font-serif:       var(--font-montserrat);
+  --font-mono:        var(--font-geist-mono);
+  --color-sidebar-ring:                 var(--sidebar-ring);
+  --color-sidebar-border:               var(--sidebar-border);
+  --color-sidebar-accent-foreground:    var(--sidebar-accent-foreground);
+  --color-sidebar-accent:               var(--sidebar-accent);
+  --color-sidebar-primary-foreground:   var(--sidebar-primary-foreground);
+  --color-sidebar-primary:              var(--sidebar-primary);
+  --color-sidebar-foreground:           var(--sidebar-foreground);
+  --color-sidebar:                      var(--sidebar);
+  --color-chart-5:   var(--chart-5);
+  --color-chart-4:   var(--chart-4);
+  --color-chart-3:   var(--chart-3);
+  --color-chart-2:   var(--chart-2);
+  --color-chart-1:   var(--chart-1);
+  --color-ring:      var(--ring);
+  --color-input:     var(--input);
+  --color-border:    var(--border);
+  --color-destructive:            var(--destructive);
+  --color-accent-foreground:      var(--accent-foreground);
+  --color-accent:                 var(--accent);
+  --color-muted-foreground:       var(--muted-foreground);
+  --color-muted:                  var(--muted);
+  --color-secondary-foreground:   var(--secondary-foreground);
+  --color-secondary:              var(--secondary);
+  --color-primary-foreground:     var(--primary-foreground);
+  --color-primary:                var(--primary);
+  --color-popover-foreground:     var(--popover-foreground);
+  --color-popover:                var(--popover);
+  --color-card-foreground:        var(--card-foreground);
+  --color-card:                   var(--card);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  
+
   /* Church-specific colors */
-  --color-primary-deep: var(--primary-deep);
-  --color-primary-warm: var(--primary-warm);
+  --color-primary-deep:    var(--primary-deep);
+  --color-primary-warm:    var(--primary-warm);
   --color-neutral-surface: var(--neutral-surface);
-  --color-gold: var(--gold);
-  --color-amber: var(--amber);
-  --color-forest-green: var(--forest-green);
-  --color-terracotta: var(--terracotta);
-  --color-heading: var(--heading);
-  --color-body: var(--body);
-  --color-caption: var(--caption);
+  --color-gold:            var(--gold);
+  --color-amber:           var(--amber);
+  --color-gold-dark:       var(--gold-dark);
+  --color-forest-green:    var(--forest-green);
+  --color-terracotta:      var(--terracotta);
+  --color-heading:         var(--heading);
+  --color-body:            var(--body);
+  --color-caption:         var(--caption);
 }
 
 @layer base {
@@ -158,135 +165,61 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-montserrat), 'Century Gothic', Trebuchet MS, system-ui, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply text-heading font-serif;
+    @apply text-heading;
+    font-family: var(--font-montserrat), 'Century Gothic', Trebuchet MS, system-ui, sans-serif;
+    font-weight: 700;
   }
 }
 
-/* Custom scrollbar styling */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
+/* ── Custom scrollbar ──────────────────────────────────────── */
+.custom-scrollbar::-webkit-scrollbar        { width: 6px; height: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track  { background: var(--neutral-surface); border-radius: 3px; }
+.custom-scrollbar::-webkit-scrollbar-thumb  { background: var(--gold); border-radius: 3px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--amber); }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: var(--neutral-surface);
-  border-radius: 3px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--gold);
-  border-radius: 3px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--amber);
-}
-
-/* Fade in animation for scroll */
+/* ── Animations ────────────────────────────────────────────── */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
+.animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
+/* ── Brand glow effects ─────────────────────────────────────── */
+.gold-glow       { box-shadow: 0 0 20px rgba(247, 196, 108, 0.35); }
+.gold-glow-hover:hover { box-shadow: 0 0 30px rgba(247, 196, 108, 0.45); }
 
-/* Gold glow effect */
-.gold-glow {
-  box-shadow: 0 0 20px rgba(201, 162, 39, 0.3);
-}
-
-.gold-glow-hover:hover {
-  box-shadow: 0 0 30px rgba(201, 162, 39, 0.4);
-}
-
-/* Warm overlay for hero */
+/* ── Warm overlay ───────────────────────────────────────────── */
 .warm-overlay {
   background: linear-gradient(
     to bottom,
-    rgba(30, 58, 95, 0.7) 0%,
-    rgba(30, 58, 95, 0.5) 50%,
-    rgba(253, 252, 250, 1) 100%
+    rgba(59, 31, 10, 0.7) 0%,
+    rgba(59, 31, 10, 0.4) 50%,
+    rgba(253, 250, 244, 1) 100%
   );
 }
 
-/* ─────────────────────────────────────────────────────────────
-   Print styles — append these to the bottom of globals.css
-   Activated when user clicks "Print / Save as PDF" on Reports page
-   ───────────────────────────────────────────────────────────── */
-
+/* ── Print styles ───────────────────────────────────────────── */
 @media print {
-  /* Hide navigation and non-report UI */
-  header,
-  nav,
-  .no-print,
-  button {
-    display: none !important;
-  }
-
-  /* Reset page layout */
+  header, nav, .no-print, button { display: none !important; }
   body {
     background: white !important;
     color: #1e1e1e !important;
-    font-size: 11pt;
-    margin: 0;
-    padding: 0;
+    font-size: 11pt; margin: 0; padding: 0;
   }
-
-  main {
-    padding: 0 !important;
-  }
-
-  /* Page sizing */
-  @page {
-    size: A4 portrait;
-    margin: 1.8cm 1.5cm;
-  }
-
-  /* Force cards to show without shadow */
-  .rounded-2xl,
-  .rounded-xl,
-  .rounded-lg {
+  main { padding: 0 !important; }
+  @page { size: A4 portrait; margin: 1.8cm 1.5cm; }
+  .rounded-2xl, .rounded-xl, .rounded-lg {
     border-radius: 6px !important;
     box-shadow: none !important;
   }
-
-  /* Keep borders visible */
-  .border,
-  .border-neutral-surface {
-    border-color: #d1ccc4 !important;
-  }
-
-  /* Avoid page breaks inside stat rows */
-  .grid > *,
-  .space-y-3 > *,
-  .space-y-4 > * {
-    break-inside: avoid;
-  }
-
-  /* Report header — make it prominent */
-  h1 {
-    font-size: 18pt !important;
-    color: #1e3a5f !important;
-    margin-bottom: 4pt;
-  }
-
-  h2, h3 {
-    font-size: 13pt !important;
-    color: #1e3a5f !important;
-  }
-
-  /* Stat pills — clean print rendering */
+  .border, .border-neutral-surface { border-color: #d1ccc4 !important; }
+  .grid > *, .space-y-3 > *, .space-y-4 > * { break-inside: avoid; }
+  h1 { font-size: 18pt !important; color: #3B1F0A !important; margin-bottom: 4pt; }
+  h2, h3 { font-size: 13pt !important; color: #3B1F0A !important; }
   [class*="bg-primary-deep"],
   [class*="bg-gold"],
   [class*="bg-forest-green"],
@@ -295,14 +228,6 @@
     color: #1e1e1e !important;
     border: 1px solid #d1ccc4 !important;
   }
-
-  /* Hide export + print cards — only show summary in print */
-  .lg\:grid-cols-2 {
-    display: none !important;
-  }
-
-  /* Make summary full width */
-  .max-w-5xl {
-    max-width: 100% !important;
-  }
+  .lg\:grid-cols-2 { display: none !important; }
+  .max-w-5xl { max-width: 100% !important; }
 }

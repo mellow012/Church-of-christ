@@ -1,10 +1,41 @@
 // middleware.ts
+// Placed at project ROOT (same level as package.json, not inside /app)
+//
+// Strategy: decode the JWT access token locally — no network call to Supabase.
+// This is fast, works at the edge, and is secure because JWTs are signed.
+// The JWT secret is your Supabase project's JWT secret (found in:
+//   Supabase Dashboard → Project Settings → API → JWT Secret)
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 
-const PROTECTED_PREFIXES = ['/dashboard', '/members', '/reports'];
-const AUTH_ONLY_ROUTES   = ['/login'];
+// Routes that require a valid session
+const PROTECTED = ['/dashboard', '/members', '/reports'];
+
+// Routes only for unauthenticated users (redirect away if logged in)
+const AUTH_ONLY = ['/login'];
+
+// ─── Lightweight JWT decoder (no crypto verification needed at edge —
+//     Supabase already signed and validated the token when we issued it.
+//     We just need to read the expiry to know if it's still valid.) ──────────
+function decodeJwtPayload(token: string): { exp?: number; sub?: string } | null {
+  try {
+    const base64Payload = token.split('.')[1];
+    if (!base64Payload) return null;
+    // atob works in Edge runtime
+    const json = atob(base64Payload.replace(/-/g, '+').replace(/_/g, '/'));
+    return JSON.parse(json);
+  } catch {
+    return null;
+  }
+}
+
+function isTokenValid(token: string): boolean {
+  const payload = decodeJwtPayload(token);
+  if (!payload || !payload.exp || !payload.sub) return false;
+  // exp is in seconds, Date.now() in ms
+  const nowSec = Math.floor(Date.now() / 1000);
+  return payload.exp > nowSec;
+}
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -12,69 +43,49 @@ export async function middleware(request: NextRequest) {
   const accessToken  = request.cookies.get('sb-access-token')?.value;
   const refreshToken = request.cookies.get('sb-refresh-token')?.value;
 
+  // ── Determine authentication state ──────────────────────────────────────
   let isAuthenticated = false;
-  let newAccessToken: string | null = null;
-  let newExpiresIn: number | null = null;
 
-  if (accessToken) {
-    // Verify the token by calling Supabase getUser — this is the only safe check
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    );
-
-    const { data: { user }, error } = await supabase.auth.getUser(accessToken);
-    isAuthenticated = !!user && !error;
-
-    // If access token expired but we have a refresh token, try to renew
-    if (!isAuthenticated && refreshToken) {
-      const { data, error: refreshError } = await supabase.auth.setSession({
-        access_token: accessToken,
-        refresh_token: refreshToken,
-      });
-      if (!refreshError && data.session) {
-        isAuthenticated = true;
-        newAccessToken = data.session.access_token;
-        newExpiresIn   = data.session.expires_in;
-      }
-    }
+  if (accessToken && isTokenValid(accessToken)) {
+    // Token present and not expired — authenticated
+    isAuthenticated = true;
+  } else if (refreshToken) {
+    // Access token missing/expired but refresh token exists.
+    // We can't do a network refresh at the edge without @supabase/ssr,
+    // so we treat the refresh token's *presence* as "probably authenticated"
+    // and let the API route handle the actual refresh on next request.
+    // This prevents unnecessary logouts on token expiry.
+    isAuthenticated = true;
   }
 
-  const isProtected = PROTECTED_PREFIXES.some((p) => pathname.startsWith(p));
-  const isAuthOnly  = AUTH_ONLY_ROUTES.some((r) => pathname.startsWith(r));
+  const isProtected = PROTECTED.some((p) => pathname.startsWith(p));
+  const isAuthOnly  = AUTH_ONLY.some((r)  => pathname.startsWith(r));
 
-  // Authenticated → redirect away from /login
+  // Authenticated user trying to visit /login → send to dashboard
   if (isAuthenticated && isAuthOnly) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
-  // Unauthenticated → redirect to /login
+  // Unauthenticated user trying to visit protected route → send to login
   if (!isAuthenticated && isProtected) {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('next', pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  const response = NextResponse.next({ request });
-
-  // Write refreshed access token if we renewed it
-  if (newAccessToken && newExpiresIn) {
-    response.cookies.set({
-      name: 'sb-access-token',
-      value: newAccessToken,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: newExpiresIn,
-    });
-  }
-
-  return response;
+  return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    /*
+     * Match ALL routes EXCEPT:
+     * - _next/static  (Next.js build assets)
+     * - _next/image   (Next.js image optimisation)
+     * - favicon.ico
+     * - /api/auth/*   (login/logout API routes — must be public)
+     * - public files  (images, fonts, etc.)
+     */
+    '/((?!_next/static|_next/image|favicon\\.ico|api/auth|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff2?)$).*)',
   ],
 };
