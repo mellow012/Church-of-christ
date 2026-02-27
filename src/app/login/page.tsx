@@ -33,9 +33,10 @@ function LoginForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error ?? 'Invalid email or password.');
-        return;
-      }
+          setError(data.error ?? 'Invalid email or password.');
+          setLoading(false); // ← add this
+          return;
+        }
 
       // ── IMPORTANT ────────────────────────────────────────────────────────
       // Use a HARD navigation (window.location) NOT router.push().
