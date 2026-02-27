@@ -1,10 +1,15 @@
 'use client';
 
-import { BookOpen, Heart, Users, MapPin, Phone, Mail, ArrowRight, ChevronDown } from 'lucide-react';
+import { BookOpen, Heart, Users, MapPin, Phone, Mail, ArrowRight, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Home() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const navLinks = ['about', 'beliefs', 'services', 'contact'];
+
   return (
     <div className="min-h-screen bg-background">
 
@@ -22,20 +27,51 @@ export default function Home() {
                 <span className="text-white/70 font-medium"> at Redcross</span>
               </span>
             </div>
+
+            {/* Desktop links */}
             <div className="hidden md:flex items-center gap-6 text-sm">
-              {['about', 'beliefs', 'services', 'contact'].map((id) => (
+              {navLinks.map((id) => (
                 <a key={id} href={`#${id}`}
                   className="text-white/65 hover:text-gold transition-colors font-medium capitalize tracking-wide">
                   {id}
                 </a>
               ))}
             </div>
-            <Link href="/login"
-              className="text-sm text-white/55 hover:text-gold transition-colors flex items-center gap-1.5 font-medium">
-              Admin <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+
+            <div className="flex items-center gap-3">
+              <Link href="/login"
+                className="text-sm text-white/55 hover:text-gold transition-colors flex items-center gap-1.5 font-medium">
+                Admin <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+
+              {/* Hamburger — mobile only */}
+              <button
+                onClick={() => setMobileMenuOpen((v) => !v)}
+                className="md:hidden p-1.5 rounded-lg text-white/60 hover:text-gold hover:bg-white/5 transition-colors"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
         </div>
+
+        {/* Mobile dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-gold/10 bg-primary-deep/95 backdrop-blur-md px-4 py-3 space-y-1">
+            {navLinks.map((id) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-2.5 rounded-lg text-white/70 hover:text-gold hover:bg-white/5
+                           transition-colors font-medium capitalize text-sm tracking-wide"
+              >
+                {id}
+              </a>
+            ))}
+          </div>
+        )}
       </nav>
 
       <main>
